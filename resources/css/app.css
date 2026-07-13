@@ -1,0 +1,16 @@
+@import 'tailwindcss';
+@import '../../vendor/livewire/flux/dist/flux.css';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@source '../views';
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+
+@theme {
+    --font-sans: Inter, sans-serif;
+    --dark-text-primary: text-slate-100;
+    --dark-text-secondary: text-slate-200;
+    --light-text-primary: text-slate-900;
+    --light-text-secondary: text-slate-500;
+
+}
