@@ -61,6 +61,10 @@ class TicketRepository
                 $filtros['categoria'] !== 'todos',
                 fn ($query) => $query->where('categoria', $filtros['categoria'])
             )
+            ->when(
+                !empty($filtros['user_id']),
+                fn ($query) => $query->where('user_id', $filtros['user_id'])
+            )
             ->latest()
             ->paginate($filtros['perPage'] ?? 10);
 
@@ -77,7 +81,7 @@ class TicketRepository
             ->orderBy('created_at')
             ->get();
 
-        $customer = User::find($ticket->user_id);
+        $customer = User::where('sid', $ticket->user_id)->first();
 
         return [
             'ticket' => $ticket,
