@@ -40,8 +40,8 @@
     </div>
 
     <flux:sidebar.nav>
-        <flux:sidebar.item icon="home" href="/dashboard">Meus Chamados</flux:sidebar.item>
-        <flux:sidebar.item icon="ticket" badge="12" href="/tickets"> Abrir Novo Chamado</flux:sidebar.item>
+        <flux:sidebar.item icon="home" href="/portal">Meus Chamados</flux:sidebar.item>
+        <flux:sidebar.item icon="ticket" badge="12" href="/create-ticket"> Abrir Novo Chamado</flux:sidebar.item>
     </flux:sidebar.nav>
     <flux:sidebar.spacer/>
 

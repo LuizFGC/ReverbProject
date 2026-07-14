@@ -1,9 +1,11 @@
 <?php
 
+use App\Models\Message;
 use App\Models\Ticket;
+use App\Models\User;
 use App\Services\TicketService;
+use Illuminate\Support\Collection;
 use Livewire\Component;
-use Livewire\Attributes\On;
 
 new class extends Component {
 
@@ -11,16 +13,21 @@ new class extends Component {
 
     public ?Ticket $ticket = null;
 
-    public function mount(string $ticket, TicketService $service): void
-    {
-        $this->ticketId = $ticket;
+    public User $customer;
 
-        $data = $service->getTicketById($ticket);
+    public Collection $messages;
+
+    public function mount(string $id): void
+    {
+
+        $this->ticketId = $id;
+
+        $service = app(TicketService::class);
+
+        $data = $service->getTicketById($id);
 
         $this->ticket = $data['ticket'];
-
         $this->messages = $data['messages'];
-
         $this->customer = $data['customer'];
     }
 
@@ -117,11 +124,11 @@ new class extends Component {
             <div class="flex items-center gap-3 mb-4">
                 <div
                     class="w-10 h-10 rounded-full bg-zinc-700 text-zinc-200 font-semibold flex items-center justify-center text-sm">
-                    {{ $customer['initials'] }}
+                    {{ $customer['name'] }}
                 </div>
                 <div>
                     <p class="text-white font-medium">{{ $customer['name'] }}</p>
-                    <p class="text-xs text-indigo-400 font-medium">{{ strtoupper($customer['company']) }}</p>
+                    <p class="text-xs text-indigo-400 font-medium">{{ strtoupper($customer['cargo']) }}</p>
                 </div>
             </div>
 
@@ -130,10 +137,10 @@ new class extends Component {
                     <flux:icon name="envelope" class="w-4 h-4 text-zinc-500"/> {{ $customer['email'] }}
                 </p>
                 <p class="flex items-center gap-2">
-                    <flux:icon name="phone" class="w-4 h-4 text-zinc-500"/> {{ $customer['phone'] }}
+                    <flux:icon name="phone" class="w-4 h-4 text-zinc-500"/> {{ $customer['email'] }}
                 </p>
                 <p class="flex items-center gap-2">
-                    <flux:icon name="building-office-2" class="w-4 h-4 text-zinc-500"/> {{ $customer['company'] }}
+                    <flux:icon name="building-office-2" class="w-4 h-4 text-zinc-500"/> {{ $customer['cargo'] }}
                 </p>
             </div>
         </div>

@@ -40,9 +40,7 @@ new class extends Component {
 
     public function openTicket(string $id): void
     {
-        $this->redirectRoute('ticket-detail', [
-            'ticket' => $id
-        ]);
+        $this->redirect("tickets/$id")    ;
     }
 
 };
