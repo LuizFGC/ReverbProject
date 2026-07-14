@@ -2,14 +2,10 @@
 
 namespace Database\Factories;
 
-use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
-/**
- * @extends Factory<User>
- */
 class UserFactory extends Factory
 {
     /**
@@ -19,17 +15,18 @@ class UserFactory extends Factory
 
     /**
      * Define the model's default state.
-     *
-     * @return array<string, mixed>
      */
     public function definition(): array
     {
         return [
+            'sid' => Str::uuid()->toString(),
             'name' => fake()->name(),
             'email' => fake()->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => static::$password ??= Hash::make('password'),
             'remember_token' => Str::random(10),
+            'role' => 'customer',
+            'cargo' => fake()->jobTitle(),
         ];
     }
 
@@ -40,6 +37,29 @@ class UserFactory extends Factory
     {
         return $this->state(fn (array $attributes) => [
             'email_verified_at' => null,
+        ]);
+    }
+
+
+    /**
+     * Indicate that the user is a support agent.
+     */
+    public function agent(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'agent',
+            'cargo' => 'Agente de Suporte',
+        ]);
+    }
+
+    /**
+     * Indicate that the user is a customer (default, but explicit).
+     */
+    public function customer(): static
+    {
+        return $this->state(fn (array $attributes) => [
+            'role' => 'customer',
+            'cargo' => fake()->jobTitle(),
         ]);
     }
 }
