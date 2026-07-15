@@ -5,7 +5,7 @@ namespace App\Livewire\Forms;
 use App\Http\Requests\Tickets\CreateTicketRequest;
 use Livewire\Form;
 
-class TicketForm extends Form
+class CreateTicketForm extends Form
 {
     public string $titulo = '';
 

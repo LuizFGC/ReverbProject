@@ -16,7 +16,7 @@
 </head>
 <body class="min-h-screen bg-white dark:bg-slate-950 antialiased">
 {{-- Sidebar --}}
-<flux:sidebar class="w-72 shrink-0 border-r bg-zinc-50 dark:bg-slate-900 border-zinc-800 flex flex-col p-6">
+<flux:sidebar  sticky class="w-72 shrink-0 border-r bg-zinc-50 dark:bg-slate-900 border-zinc-800 flex flex-col p-6">
     <flux:sidebar.header>
         <div class="flex items-center gap-3 pb-6 border-b border-zinc-800">
             <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center">
