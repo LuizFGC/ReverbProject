@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use MongoDB\Laravel\Eloquent\Model;
+use MongoDB\Laravel\Eloquent\HybridRelations;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, HybridRelations;
 
     protected $connection = 'mongodb';
 
@@ -22,7 +23,7 @@ class Ticket extends Model
         'categoria',
         'descricao',
         'anexos',
-        'user_name'
+        'user_name',
     ];
 
     protected $casts = [
@@ -31,11 +32,29 @@ class Ticket extends Model
         'prioridade' => 'string',
         'user_id' => 'string',
         'user_name' => 'string',
-        'assigned_to' => 'integer',
+        'assigned_to' => 'string',
         'categoria' => 'string',
         'descricao' => 'string',
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
         'anexos' => 'array',
     ];
+
+    public function customer()
+    {
+        return $this->belongsTo(User::class, 'user_id', 'sid');
+    }
+
+
+    public function assignedAgent()
+    {
+        return $this->belongsTo(User::class, 'assigned_to', 'sid');
+
+    }
+
+    public function messages()
+    {
+        return $this->hasMany(Message::class, 'ticket_id')
+            ->orderBy('created_at', 'asc');
+    }
 }
