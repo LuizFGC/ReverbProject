@@ -37,6 +37,13 @@
             <flux:sidebar.item icon="information-circle" href="#">Help</flux:sidebar.item>
         </flux:sidebar.nav>
         <flux:dropdown position="top" align="start" class="max-lg:hidden">
+            @php
+                $initials = collect(explode(' ', trim(auth()->user()->name)))
+                    ->filter()
+                    ->map(fn ($n) => mb_strtoupper(mb_substr($n, 0, 1)))
+                    ->take(2)
+                    ->join('');
+            @endphp
             <flux:sidebar.profile avatar="{{auth()->user()->name}}" name="{{auth()->user()->name}}" />
             <flux:menu>
                 @csrf
