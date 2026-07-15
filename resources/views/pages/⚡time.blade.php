@@ -20,13 +20,6 @@ new class extends Component {
             auth()->user()->sid,
             $presence
         );
-
-
-        dd(
-            app(PresenceService::class)->getCurrentPresence(
-                auth()->user()->sid
-            ));
-
         unset($this->agentes);
         $this->dispatch('$refresh');
     }
