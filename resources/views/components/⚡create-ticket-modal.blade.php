@@ -1,7 +1,7 @@
 <?php
 
 
-use App\Livewire\Forms\TicketForm;
+use App\Livewire\Forms\CreateTicketForm;
 use App\Services\TicketService;
 use Livewire\Attributes\On;
 use Flux\Flux;
@@ -16,11 +16,11 @@ new class extends Component {
     public bool $showModal = false;
 
 
-    public TicketForm $form;
+    public CreateTicketForm $form;
 
     public function mount(): void
     {
-        $this->form = new TicketForm($this, 'form');
+        $this->form = new CreateTicketForm($this, 'form');
     }
 
     protected array $priorityOptions = [

@@ -52,7 +52,15 @@ new class extends Component {
         <flux:dropdown position="bottom" align="end">
             <button class="flex items-center gap-2">
                 <div class="relative">
-                    <flux:avatar name="lUIZ" color="purple" size="sm"/>
+                    @php
+                        $initials = collect(explode(' ', trim(auth()->user()->name)))
+                            ->filter()
+                            ->map(fn ($n) => mb_strtoupper(mb_substr($n, 0, 1)))
+                            ->take(2)
+                            ->join('');
+                    @endphp
+
+                    <flux:avatar name="{{$initials}}" color="purple" size="sm"/>
                     <span
                         class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-500 border-2 border-zinc-900 rounded-full"></span>
                 </div>
