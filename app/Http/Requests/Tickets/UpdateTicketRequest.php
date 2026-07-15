@@ -10,17 +10,11 @@ class UpdateTicketRequest extends FormRequest
     {
         return [
 
-            'titulo' => 'string',
-
             'prioridade' => 'in:Baixa,Media,Alta,Urgente',
 
             'status' => 'string|in:Aberto,Em Atendimento,Resolvido,Fechado',
 
             'categoria' => 'string',
-
-            'descricao' => 'string',
-
-            'anexos' => 'array',
 
             'assigned_to' => 'string',
         ];
