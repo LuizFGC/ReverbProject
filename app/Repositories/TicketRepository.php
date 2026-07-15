@@ -62,7 +62,7 @@ class TicketRepository
                 fn ($query) => $query->where('categoria', $filtros['categoria'])
             )
             ->when(
-                !empty($filtros['user_id']),
+                ! empty($filtros['user_id']),
                 fn ($query) => $query->where('user_id', $filtros['user_id'])
             )
             ->latest()
@@ -74,19 +74,10 @@ class TicketRepository
     {
         $ticket = Ticket::findOrFail($id);
 
-        $messages = Message::where(
-            'ticket_id',
-            $ticket->_id
-        )
-            ->orderBy('created_at')
-            ->get();
-
-        $customer = User::where('sid', $ticket->user_id)->first();
-
         return [
             'ticket' => $ticket,
-            'messages' => $messages,
-            'customer' => $customer,
+            'messages' => $ticket->messages()->with('user')->get(),
+            'customer' => $ticket->customer,
         ];
     }
 
@@ -99,5 +90,12 @@ class TicketRepository
             ])
             ->get()
             ->groupBy('assigned_to');
+    }
+
+    public function updateField($ticket, $field, $value): void
+    {
+        $ticket->update([
+            $field => $value,
+        ]);
     }
 }

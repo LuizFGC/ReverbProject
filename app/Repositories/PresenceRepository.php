@@ -23,17 +23,13 @@ class PresenceRepository
 
     public function updatePresence($userId, $status): void
     {
-        $last = PresenceLog::where('user_id', $userId)
-            ->latest()
-            ->first();
-
-        if ($last?->status === $status) {
-            return;
-        }
-
-        PresenceLog::create([
-            'user_id' => $userId,
-            'status' => $status,
-        ]);
+        PresenceLog::updateOrCreate(
+            [
+                'user_id' => $userId
+            ],
+            [
+                'status' => $status
+            ]
+        );
     }
 }

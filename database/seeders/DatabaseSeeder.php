@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
 
         foreach ($users as $user) {
 
-            Ticket::factory(5)->create([
+            Ticket::factory(2)->create([
                 'user_id' => $user->sid,
                 'user_name' => $user->name,
             ]);

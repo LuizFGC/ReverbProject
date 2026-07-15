@@ -28,8 +28,6 @@ class TicketFactory extends Factory
                 'Urgente',
             ]),
 
-            'assigned_to' => fake()->optional()->numberBetween(1, 20),
-
             'categoria' => fake()->randomElement([
                 'TI',
                 'Financeiro',

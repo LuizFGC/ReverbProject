@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Models\Ticket;
 use App\Repositories\TicketRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
 
@@ -51,5 +52,10 @@ class TicketService
     public function getTicketById(string $id)
     {
         return $this->repository->getById($id);
+    }
+
+    public function updateField(Ticket $ticket, string $field, mixed $value): void
+    {
+        $this->repository->updateField($ticket, $field, $value);
     }
 }
