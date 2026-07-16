@@ -44,10 +44,10 @@ class extends Component {
 
     {{-- Logo --}}
     <div class="flex flex-col items-center text-center mb-8">
-        <div class="w-14 h-14 rounded-2xl bg-indigo-600 flex items-center justify-center mb-4">
-
+        <div class="w-auto rounded-2xl flex items-center justify-center mb-4">
+            <img src="{{ asset('logoWhite.png') }}" class="h-18" alt="">
         </div>
-        <h1 class="text-2xl font-bold text-white">TecSuporte</h1>
+
         <p class="text-zinc-400 mt-1">
             {{ $form->mode === 'agent' ? 'Acesse a plataforma de gerenciamento de chamados técnicos.' : 'Consulte seus chamados, inicie chats e abra novas solicitações.' }}
         </p>

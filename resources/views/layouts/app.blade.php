@@ -6,7 +6,7 @@
 
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=inter:400,500,600&display=swap" rel="stylesheet" />
-
+        <link rel="icon" href="{{ asset('faviconn.ico') }}">
         <title>{{ $title ?? config('app.name') }}</title>
 
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -18,12 +18,25 @@
 
     <flux:sidebar sticky collapsible class="bg-zinc-50 dark:bg-slate-900 border-r border-zinc-200 dark:border-zinc-700">
         <flux:sidebar.header>
-            <flux:sidebar.brand
-                href="/dashboard"
-                logo="https://fluxui.dev/img/demo/logo.png"
-                logo:dark="https://fluxui.dev/img/demo/dark-mode-logo.png"
-                name="TecSuporte."
-            />
+{{--            <flux:sidebar.brand--}}
+{{--                href="/dashboard"--}}
+{{--                :logo="asset('logo.png')"--}}
+{{--                :logo:dark="asset('logoWhite.png')"--}}
+{{--                class="[&_img]:h-25 [&_img]:w-auto bg-red-500"--}}
+{{--            />--}}
+            {{-- Logo tema claro --}}
+            <img
+                src="{{ asset('logo.png') }}"
+                class="h-12 w-auto dark:hidden"
+                alt="Deskly"
+            >
+
+            {{-- Logo tema escuro --}}
+            <img
+                src="{{ asset('logoWhite.png') }}"
+                class="hidden h-12 w-auto dark:block"
+                alt="Deskly"
+            >
             <flux:sidebar.collapse class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2" />
         </flux:sidebar.header>
         <flux:sidebar.nav>

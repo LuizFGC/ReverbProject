@@ -107,7 +107,7 @@ new class extends Component {
     #[On('echo-private:ticket.{ticketId},.MessageSent')]
     public function receiveMessage($event)
     {
-        $message = Message::with('user')
+            $message = Message::with('user')
             ->find($event['id']);
 
         if ($message && $message->user_id != auth()->user()->sid) {
