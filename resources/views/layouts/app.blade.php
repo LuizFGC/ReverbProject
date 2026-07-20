@@ -18,23 +18,18 @@
 
     <flux:sidebar sticky collapsible class="bg-zinc-50 dark:bg-slate-900 border-r border-zinc-200 dark:border-zinc-700">
         <flux:sidebar.header>
-{{--            <flux:sidebar.brand--}}
-{{--                href="/dashboard"--}}
-{{--                :logo="asset('logo.png')"--}}
-{{--                :logo:dark="asset('logoWhite.png')"--}}
-{{--                class="[&_img]:h-25 [&_img]:w-auto bg-red-500"--}}
-{{--            />--}}
+
             {{-- Logo tema claro --}}
             <img
                 src="{{ asset('logo.png') }}"
-                class="h-12 w-auto dark:hidden"
+                class="h-10 w-auto dark:hidden"
                 alt="Deskly"
             >
 
             {{-- Logo tema escuro --}}
             <img
                 src="{{ asset('logoWhite.png') }}"
-                class="hidden h-12 w-auto dark:block"
+                class="hidden h-10 w-auto dark:block"
                 alt="Deskly"
             >
             <flux:sidebar.collapse class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2" />
@@ -50,14 +45,7 @@
             <flux:sidebar.item icon="information-circle" href="#">Help</flux:sidebar.item>
         </flux:sidebar.nav>
         <flux:dropdown position="top" align="start" class="max-lg:hidden">
-            @php
-                $initials = collect(explode(' ', trim(auth()->user()->name)))
-                    ->filter()
-                    ->map(fn ($n) => mb_strtoupper(mb_substr($n, 0, 1)))
-                    ->take(2)
-                    ->join('');
-            @endphp
-            <flux:sidebar.profile avatar="{{auth()->user()->name}}" name="{{auth()->user()->name}}" />
+            <flux:sidebar.profile name="{{auth()->user()->name}}" />
             <flux:menu>
                 @csrf
                     <form method="POST" action="{{ route('logout') }}" >
