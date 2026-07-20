@@ -67,7 +67,7 @@ class extends Component {
         ],
     ];
 
-    public function removeAttachment(int $index): void
+    public function removerAnexos(int $index): void
     {
         unset($this->form->anexos[$index]);
 

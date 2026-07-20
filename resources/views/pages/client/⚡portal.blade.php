@@ -40,6 +40,23 @@ class extends Component {
             'categoria' => $this->categoria
         ]);
     }
+    #[Computed]
+    public function ticketsAbertos()
+    {
+        return $this->tickets
+            ->getCollection()
+            ->where('status', 'Aberto')
+            ->count();
+    }
+
+    #[Computed]
+    public function ticketsFechados()
+    {
+        return $this->tickets
+            ->getCollection()
+            ->where('status', 'Fechado')
+            ->count();
+    }
 
 };
 ?>
@@ -55,11 +72,11 @@ class extends Component {
         <div class="flex items-center gap-3">
             <div class="bg-zinc-50 dark:bg-slate-900  border border-zinc-800 rounded-xl px-4 py-2 text-center">
                 <p class="text-xs font-medium tracking-wide text-zinc-500">ATIVOS / ABERTOS</p>
-                <p class="text-lg font-bold text-indigo-400">{{ 2 }}</p>
+                <p class="text-lg font-bold text-indigo-400">{{ $this->ticketsAbertos }}</p>
             </div>
             <div class="bg-zinc-50 dark:bg-slate-900 border border-zinc-800 rounded-xl px-4 py-2 text-center">
                 <p class="text-xs font-medium tracking-wide text-zinc-500">RESOLVIDOS</p>
-                <p class="text-lg font-bold text-emerald-400">{{ 3}}</p>
+                <p class="text-lg font-bold text-emerald-400">{{ $this->ticketsFechados }}</p>
             </div>
         </div>
     </div>
@@ -83,8 +100,8 @@ class extends Component {
                     class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors {{ $status === 'Em Atendimento' ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:text-white' }}">
                 Em Atendimento
             </button>
-            <button wire:click="$set('status', 'Resolvido')"
-                    class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors {{ $status === 'Resolvido' ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:text-white' }}">
+            <button wire:click="$set('status', 'Fechado')"
+                    class="px-4 py-1.5 rounded-md text-sm font-medium transition-colors {{ $status === 'Fechado' ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:text-white' }}">
                 Resolvidos
             </button>
         </div>
@@ -97,11 +114,11 @@ class extends Component {
                 <div class="flex items-center justify-between mb-3">
                     <span class="text-indigo-400 font-semibold text-sm"> Id: {{ $ticket['id'] }}</span>
                     <div class="flex items-center gap-2">
-                            <span class="text-xs font-medium text-amber-400 flex items-center gap-1">
+                            <span class="text-xs font-medium flex items-center gap-1">
                                 <flux:icon name="x-circle" class="w-3.5 h-3.5"/> {{ $ticket['prioridade'] }}
                             </span>
                         <span
-                            class="text-xs font-semibold px-2 py-0.5 rounded-full bg-amber-500/15 text-amber-400 uppercase">
+                            class="text-xs font-semibold px-2 py-0.5 rounded-full uppercase">
                                 {{ $ticket['status']  }}
                             </span>
                     </div>

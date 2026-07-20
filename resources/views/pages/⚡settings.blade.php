@@ -4,7 +4,7 @@ use Livewire\Component;
 
 new class extends Component
 {
-    //
+    //TODO: Criar Tela de Config
 };
 ?>
 

@@ -29,13 +29,19 @@ new class extends Component {
     {
         $service = app(TicketService::class);
 
-        return $service->getTickets([
+        $filters = [
             'busca' => $this->busca,
             'status' => $this->status,
             'prioridade' => $this->prioridade,
             'categoria' => $this->categoria,
             'perPage' => $this->perPage,
-        ]);
+        ];
+
+        if (auth()->user()->role !== 'gerente') {
+            $filters['agente'] = auth()->user()->sid;
+        }
+
+        return $service->getTickets($filters);
     }
 
     public function openTicket(string $id): void
@@ -47,7 +53,7 @@ new class extends Component {
 ?>
 <div class="p-8 space-y-6">
 
-    {{-- Header --}}
+
     <div class="flex items-start justify-between">
         <div>
             <h1 class="text-2xl font-bold text-white">Fila de Atendimento</h1>
@@ -64,7 +70,7 @@ new class extends Component {
         <livewire:create-ticket-modal/>
     </flux:modal>
 
-    {{-- Filters --}}
+    {{-- Filtros --}}
     <div class="bg-zinc-50 dark:bg-slate-900  rounded-xl p-5 flex flex-wrap items-end gap-4">
         <div class="min-w-[160px]">
             <flux:select label="Status" wire:model.live="status">
@@ -100,7 +106,7 @@ new class extends Component {
         </div>
     </div>
 
-    {{-- Ticket list --}}
+    {{--  lista --}}
          <flux:table :paginate="$this->tickets">
             <flux:table.columns>
                 <flux:table.columns>
@@ -110,21 +116,47 @@ new class extends Component {
                     <flux:table.column>Prioridade</flux:table.column>
                 </flux:table.columns>
                 <flux:table.rows>
-                    @foreach($this->tickets as $ticket)
+                    @forelse($this->tickets as $ticket)
                         <flux:table.row :key="$ticket->id">
-                            <flux:table.cell >
+                            <flux:table.cell>
                                 {{ $ticket->user_name }}
                             </flux:table.cell>
-                            <flux:table.cell > {{ $ticket->titulo }}</flux:table.cell>
-                            <flux:table.cell class="py-0">
-                                <flux:badge size="sm"> {{ $ticket->status }}</flux:badge>
+
+                            <flux:table.cell>
+                                {{ $ticket->titulo }}
                             </flux:table.cell>
-                            <flux:table.cell variant="strong"> {{ $ticket->prioridade }}</flux:table.cell>
+
                             <flux:table.cell class="py-0">
-                                <flux:button class="cursor-pointer" variant="ghost" size="sm" icon="eye" wire:click="openTicket('{{ $ticket->id }}')"></flux:button>
+                                <flux:badge size="sm">
+                                    {{ $ticket->status }}
+                                </flux:badge>
+                            </flux:table.cell>
+
+                            <flux:table.cell>
+                                <flux:badge size="sm">
+                                    {{ $ticket->prioridade }}
+                                </flux:badge>
+                            </flux:table.cell>
+
+                            <flux:table.cell class="py-0">
+                                <flux:button
+                                    class="cursor-pointer"
+                                    variant="ghost"
+                                    size="sm"
+                                    icon="eye"
+                                    wire:click="openTicket('{{ $ticket->id }}')"
+                                />
                             </flux:table.cell>
                         </flux:table.row>
-                    @endforeach
+                    @empty
+                        <flux:table.row>
+                            <flux:table.cell colspan="5">
+                                <div class="text-center py-4 text-zinc-500">
+                                    Nenhum ticket encontrado.
+                                </div>
+                            </flux:table.cell>
+                        </flux:table.row>
+                    @endforelse
                 </flux:table.rows>
          </flux:table>
 </div>

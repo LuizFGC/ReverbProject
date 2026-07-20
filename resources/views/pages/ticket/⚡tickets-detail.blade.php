@@ -91,6 +91,7 @@ new class extends Component {
 
     public function updatedAssignedTo($value, TicketService $service): void
     {
+
         $service->updateField(
             $this->ticket,
             'assigned_to',
@@ -119,13 +120,12 @@ new class extends Component {
 ?>
 <div class="flex gap-6 h-[calc(85vh)] p-6">
 
-    {{-- Left card: ticket + customer details --}}
+
     <flux:card class="w-80 shrink-0 overflow-y-auto bg-zinc-50 dark:bg-slate-900">
 
-        <button wire:click="redirect('/tickets')"
-                class="flex items-center gap-2 text-zinc-400 hover:text-white text-sm mb-6 cursor-pointer">
+        <a href="/tickets" class="flex items-center gap-1.5 text-zinc-400 hover:text-white text-sm" wire:navigate >
             <flux:icon name="arrow-left" class="w-4 h-4"/>
-        </button>
+        </a>
 
         <p class="text-xs font-medium tracking-wide text-zinc-500 uppercase">ID do Chamado</p>
         <p class="text-sm font-bold text-white mt-1">{{ $this->ticketId }}</p>
@@ -168,8 +168,9 @@ new class extends Component {
                 <flux:select wire:model.live="assigned_to" size="sm"
                              class="[&>select]:bg-zinc-800/60 [&>select]:border-zinc-700 [&>select]:text-zinc-200 [&>select]:rounded-lg">
                     @foreach ($this->agentes as $agent)
-                        <flux:select.option value="{{$agent['user']['name']}}">{{$agent['user']['name']}}
-                            - {{$agent['user']['cargo']}}
+
+                        <flux:select.option value="{{$agent['sid']}}">{{$agent['name']}}
+                            - {{$agent['cargo']}}
                         </flux:select.option>
                     @endforeach
 
@@ -216,15 +217,14 @@ new class extends Component {
         </div>
 
         <div class="border-t border-zinc-800 mt-5 pt-5 text-xs text-zinc-500 space-y-1">
-            <p>Criado em: {{ $ticket->createdAt }}</p>
-            <p>Atualizado: {{ $ticket->updatedAt }}</p>
+            <p>Abertura: {{ $ticket->created_at->format('H:i:s \d\o \d\i\a d/m/Y') }}</p>
+            <p>Atualização: {{ $ticket->updated_at->format('H:i:s') }}</p>
         </div>
     </flux:card>
 
-    {{-- Right card: chat --}}
+    {{--  chat --}}
     <flux:card class="flex-1 flex flex-col overflow-hidden !p-0 bg-zinc-50 dark:bg-slate-900">
 
-        {{-- Chat header --}}
         <div class="flex items-center justify-between px-6 py-4 border-b border-zinc-800">
             <div class="flex items-center gap-3">
                 <span
@@ -238,13 +238,9 @@ new class extends Component {
             </span>
         </div>
 
-        {{-- Messages --}}
+        {{--Mensagens--}}
         <div class="flex-1 overflow-y-auto px-6 py-6 space-y-5">
             @foreach ($messages as $message)
-                @php
-
-                @endphp
-
                 @if ($message->user_id === auth()->user()->sid)
                     <div class="flex items-end gap-3 justify-end">
                         <div class="max-w-lg">
@@ -275,7 +271,7 @@ new class extends Component {
                         <div class="relative shrink-0">
                             <div
                                 class="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold flex items-center justify-center">
-                                {{ $message->user->name }}
+                                {{auth()->user()->initials()}}
                             </div>
                             <span
                                 class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border-2 border-zinc-950"></span>
@@ -286,7 +282,7 @@ new class extends Component {
                         <div class="relative shrink-0">
                             <div
                                 class="w-8 h-8 rounded-full bg-zinc-700 text-zinc-200 text-xs font-semibold flex items-center justify-center">
-                                {{ $message->user->name }}
+                                {{auth()->user()->initials()}}
                             </div>
                             <span
                                 class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border-2 border-zinc-950"></span>
@@ -304,7 +300,7 @@ new class extends Component {
             @endforeach
         </div>
 
-        {{-- Reply input --}}
+        {{-- botao reply --}}
         <form wire:submit="sendReply" class="flex items-center gap-3 px-6 py-4 border-t border-zinc-800">
             <button type="button" class="text-zinc-500 hover:text-white shrink-0">
                 <flux:icon name="paper-clip" class="w-5 h-5"/>

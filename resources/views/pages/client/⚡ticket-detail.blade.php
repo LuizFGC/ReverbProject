@@ -108,29 +108,10 @@ class extends Component {
                     </div>
                 </div>
 
-                <div class="flex items-center gap-3">
-                    {{--                <span class="text-xs font-semibold px-3 py-1.5 rounded-full uppercase {{ $this->statusMeta['badge'] }}">--}}
-                    {{--                    {{ $this->statusMeta['label'] }}--}}
-                    {{--                </span>--}}
-
-                    {{--                @if ($ticket->status !== 'Resolvido')--}}
-                    {{--                    <flux:button variant="primary" size="sm" icon="check-circle" wire:click="markAsResolved">--}}
-                    {{--                        Marcar como Resolvido--}}
-                    {{--                    </flux:button>--}}
-                    {{--                @endif--}}
-                </div>
             </div>
 
-            {{-- Initial description --}}
-{{--            <div class="px-6 pt-6">--}}
-{{--                <div class="bg-indigo-500/5 border border-indigo-500/30 rounded-xl p-4">--}}
-{{--                    <p class="text-xs font-semibold tracking-wide text-indigo-400 mb-2">DESCRIÇÃO INICIAL DO--}}
-{{--                        PROBLEMA</p>--}}
-{{--                    <p class="text-sm text-zinc-300">{{ $ticket->descricao }}</p>--}}
-{{--                </div>--}}
-{{--            </div>--}}
 
-            {{-- Messages --}}
+            {{-- Mensagens --}}
             <div class="flex-1 overflow-y-auto px-6 py-6 space-y-5">
                 <div class="flex justify-center">
                 <span
@@ -143,7 +124,7 @@ class extends Component {
                 @foreach ($messages as $message)
                     @php
 
-                    @endphp
+                        @endphp
                     @if ($message->type === 'system')
                         <div class="flex justify-center">
                         <span
@@ -163,14 +144,14 @@ class extends Component {
                             </div>
                             <div
                                 class="w-8 h-8 rounded-full bg-indigo-500/20 text-indigo-300 text-xs font-semibold flex items-center justify-center shrink-0">
-                                {{ $message->user->name }}
+                                {{auth()->user()->initials()}}
                             </div>
                         </div>
                     @else
                         <div class="flex items-end gap-3">
                             <div
                                 class="w-8 h-8 rounded-full bg-zinc-700 text-zinc-200 text-xs font-semibold flex items-center justify-center shrink-0">
-                                {{ $message->user->name }}
+                                {{auth()->user()->initials()}}
                             </div>
                             <div class="max-w-lg">
                                 <p class="text-sm text-zinc-400 mb-1">
@@ -186,7 +167,7 @@ class extends Component {
                 @endforeach
             </div>
 
-            {{-- Reply input --}}
+
             <form wire:submit="sendReply"
                   class="flex items-center gap-3 px-6 py-4 border-t border-zinc-800 bg-zinc-50 dark:bg-slate-900">
                 <flux:input
@@ -198,30 +179,30 @@ class extends Component {
             </form>
         </div>
 
-        {{-- Right: sidebar with ticket details --}}
+
         <div class="w-80 shrink-0 border-l border-zinc-800 p-6 overflow-y-auto bg-zinc-50 dark:bg-slate-900">
             <p class="text-xs font-medium tracking-wide text-zinc-500 mb-4">DETALHES DO CHAMADO</p>
 
             <div class="space-y-4">
                 <div>
                     <p class="text-sm text-zinc-500">Status</p>
-                    {{--                <span--}}
-                    {{--                    class="inline-block mt-1 text-xs font-semibold px-3 py-1 rounded-full uppercase {{ $this->statusMeta['badge'] }}">--}}
-                    {{--                    {{ $this->statusMeta['label'] }}--}}
-                    {{--                </span>--}}
+                    <span
+                        class="inline-block mt-1 text-xs font-semibold py-1 rounded-full ">
+                        {{ $ticket->status }}
+                    </span>
                 </div>
 
                 <div>
                     <p class="text-sm text-zinc-500">Prioridade</p>
-                    {{--                <p class="flex items-center gap-1.5 mt-1 font-medium {{ $this->priorityMeta['color'] }}">--}}
-                    {{--                    <flux:icon name="exclamation-triangle" class="w-4 h-4"/>--}}
-                    {{--                    {{ $this->priorityMeta['label'] }}--}}
-                    {{--                </p>--}}
+                    <p class="flex items-center gap-1.5 mt-1 text-xs font-semibold">
+                        <flux:icon name="exclamation-triangle" class="w-4 h-4"/>
+                        {{ $ticket->prioridade }}
+                    </p>
                 </div>
 
                 <div>
                     <p class="text-sm text-zinc-500">Categoria</p>
-                    <p class="text-white font-medium mt-1">{{ ucfirst($ticket->categoria) }}</p>
+                    <p class="text-white text-xs font-semibold mt-1">{{ ucfirst($ticket->categoria) }}</p>
                 </div>
             </div>
 
@@ -232,10 +213,10 @@ class extends Component {
                     <div class="flex items-center gap-3">
                         <div
                             class="w-10 h-10 rounded-full bg-indigo-500/20 text-indigo-300 font-semibold flex items-center justify-center text-sm">
-                            {{ $ticket->assigned_to }}
+                            {{ $ticket->assignedAgent->initials() }}
                         </div>
                         <div>
-                            <p class="text-white font-medium">{{ $ticket->assigned_to }}</p>
+                            <p class="text-white font-medium">{{ $ticket->assignedAgent->name }}</p>
                             <p class="text-xs text-zinc-500">{{ $ticket->assignedAgent->role_label ?? 'Agente de Suporte' }}</p>
                         </div>
                     </div>
