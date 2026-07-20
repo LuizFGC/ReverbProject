@@ -1,15 +1,25 @@
 <?php
 
+use App\Services\DashboardService;
+use App\Services\TicketService;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
-new class extends Component
-{
-    public array $stats = [
-        ['label' => 'AGUARDANDO RESPOSTA', 'value' => '2', 'icon' => 'inbox', 'trend' => '-4%', 'trendType' => 'down', 'note' => 'vs semana anterior', 'bg-color' => 'bg-blue-900', 'color' => ' text-blue-500'],
-        ['label' => 'EM ATENDIMENTO', 'value' => '1', 'icon' => 'clock', 'trend' => 'Estável', 'trendType' => 'neutral', 'note' => 'distribuição uniforme','bg-color' => 'bg-yellow-900', 'color' => ' text-yellow-500'],
-        ['label' => 'RESOLVIDOS / FECHADOS', 'value' => '3', 'icon' => 'check-circle', 'trend' => '+12%', 'trendType' => 'up', 'note' => 'alta resolução hoje','bg-color' => 'bg-green-900', 'color' => ' text-green-500'],
-        ['label' => 'TEMPO MÉDIO DE RESPOSTA', 'value' => '14m', 'icon' => 'user-plus', 'trend' => 'SLA: 98.4%', 'trendType' => 'up', 'note' => 'dentro da meta','bg-color' => 'bg-indigo-950', 'color' => ' text-indigo-500'],
-    ];
+new class extends Component {
+
+    public function tickets()
+    {
+
+        $filters = [];
+        $service = app(DashboardService::class);
+
+        if (auth()->user()->role !== 'gerente') {
+            $filters['agente'] = auth()->user()->sid;
+        }
+
+        return $service->getDashboardData($filters);
+    }
+
 
     public array $weeklyVolume = [
         ['day' => 'Seg', 'opened' => 45, 'resolved' => 1],
@@ -22,7 +32,7 @@ new class extends Component
     ];
 
     public array $recentActivity = [
-        // preencha com seus dados reais / model
+
     ];
 };
 ?>
@@ -47,7 +57,7 @@ new class extends Component
                 <div class="flex items-center justify-between">
                     <span class="text-xs font-medium tracking-wide text-zinc-500">{{ $stat['label'] }}</span>
                     <div class="w-8 h-8 rounded-full {{$stat['bg-color']}} flex items-center justify-center">
-                        <flux:icon name="{{ $stat['icon'] }}" class="w-4 h-4  {{$stat['color']}}" />
+                        <flux:icon name="{{ $stat['icon'] }}" class="w-4 h-4  {{$stat['color']}}"/>
                     </div>
                 </div>
 
@@ -67,10 +77,10 @@ new class extends Component
         @endforeach
     </div>
 
-    {{-- Chart + Alerts --}}
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
 
-        {{-- Bar chart --}}
+
         <div class="lg:col-span-2 bg-zinc-50 dark:bg-slate-900 border-zinc-800 rounded-xl p-6">
             <div class="flex items-start justify-between mb-6">
                 <div>
@@ -104,19 +114,19 @@ new class extends Component
             </div>
         </div>
 
-        {{-- Alerts panel --}}
+
         <div class="bg-zinc-50 dark:bg-slate-900 border border-zinc-800 rounded-xl p-6 flex flex-col">
             <div class="flex items-center gap-2 mb-3">
-                <flux:icon name="bell-alert" class="w-4 h-4 text-red-400" />
+                <flux:icon name="bell-alert" class="w-4 h-4 text-red-400"/>
                 <h2 class="text-white font-semibold">Alertas Urgentes</h2>
             </div>
             <p class="text-sm text-zinc-500 mb-4">
-                Chamados categorizados como <span class="text-white">Urgentes</span> requerem resposta inicial em até 15 minutos de acordo com os SLAs globais contratados.
+                Chamados categorizados como <span class="text-white">Urgentes</span> requerem resposta com prioridade.
             </p>
 
             <div class="bg-red-950/40 border border-red-900/50 rounded-lg p-4 flex-1">
                 <div class="flex items-start gap-3">
-                    <flux:icon name="exclamation-triangle" class="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
+                    <flux:icon name="exclamation-triangle" class="w-5 h-5 text-red-400 shrink-0 mt-0.5"/>
                     <div class="flex-1">
                         <div class="flex items-center justify-between">
                             <span class="text-red-400 font-semibold text-sm">TS-2941</span>
@@ -128,10 +138,6 @@ new class extends Component
                 </div>
             </div>
 
-            <div class="flex items-center justify-between mt-4 pt-4 border-t border-zinc-800">
-                <span class="text-sm text-zinc-500">Próxima renovação SLA</span>
-                <span class="text-sm text-white font-medium">Em 8 minutos</span>
-            </div>
         </div>
     </div>
 
@@ -142,7 +148,7 @@ new class extends Component
                 <h2 class="text-white font-semibold">Atividades Recentes</h2>
                 <p class="text-sm text-zinc-500">Últimos chamados com interações ou alteração de status.</p>
             </div>
-            <a href="#tickets" class="text-sm text-blue-400 hover:text-blue-300 font-medium">Ver todos os chamados</a>
+            <a href="/tickets" class="text-sm text-blue-400 hover:text-blue-300 font-medium">Ver todos os chamados</a>
         </div>
 
         <flux:table>
