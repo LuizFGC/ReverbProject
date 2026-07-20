@@ -56,7 +56,9 @@ class AuthService
 
     public function redirectPathForCurrentUser(): string
     {
-        return Auth::user()?->role === 'agent'
+        $role = Auth::user()?->role;
+
+        return $role === 'agent' || $role === 'gerente'
             ? '/dashboard'
             : '/portal';
     }

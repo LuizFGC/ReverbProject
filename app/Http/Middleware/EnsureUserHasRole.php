@@ -8,9 +8,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserHasRole
 {
-    /**
-     * @param  string  ...$roles  Ex: 'agent', 'customer', ou múltiplos: 'agent,admin'
-     */
+
     public function handle(Request $request, Closure $next, string ...$roles): Response
     {
         if (! auth()->check()) {
