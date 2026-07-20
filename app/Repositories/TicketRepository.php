@@ -14,14 +14,6 @@ class TicketRepository
         return Ticket::create($ticket);
     }
 
-    public function update(array $ticket, string $id)
-    {
-        $model = Ticket::findOrFail($id);
-
-        $model->update($ticket);
-
-    }
-
     public function delete(string $id)
     {
         $model = Ticket::findOrFail($id);
@@ -65,6 +57,10 @@ class TicketRepository
                 ! empty($filtros['user_id']),
                 fn ($query) => $query->where('user_id', $filtros['user_id'])
             )
+            ->when(
+                ! empty($filtros['agente']),
+                fn ($query) => $query->where('assigned_to', $filtros['agente'])
+            )
             ->latest()
             ->paginate($filtros['perPage'] ?? 10);
 
@@ -81,15 +77,14 @@ class TicketRepository
         ];
     }
 
-    public function getByAgent($agentesId)
+    public function getByAgent($id)
     {
-        return Ticket::whereIn('assigned_to', $agentesId)
+        return Ticket::where('assigned_to', $id)
             ->whereIn('status', [
                 'Aberto',
                 'Em andamento',
             ])
-            ->get()
-            ->groupBy('assigned_to');
+            ->count();
     }
 
     public function updateField($ticket, $field, $value): void

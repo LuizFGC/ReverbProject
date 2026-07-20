@@ -43,27 +43,4 @@ class Message extends Model
         return $this->belongsTo(User::class, 'user_id', 'sid');
     }
 
-    public function markAsRead(): void
-    {
-        $this->update([
-            'read_at' => now(),
-        ]);
-    }
-
-    public function isRead(): bool
-    {
-        return ! is_null($this->read_at);
-    }
-
-    public function scopeForTicket($query, string $ticketId)
-    {
-        return $query
-            ->where('ticket_id', $ticketId)
-            ->orderBy('created_at', 'asc');
-    }
-
-    public function scopeUnread($query)
-    {
-        return $query->whereNull('read_at');
-    }
 }

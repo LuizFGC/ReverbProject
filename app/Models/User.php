@@ -46,9 +46,6 @@ class User extends Authenticatable
         ];
     }
 
-    /**
-     * Get the user's initials
-     */
     public function initials(): string
     {
         $initials = Str::initials($this->name, true);
@@ -58,17 +55,6 @@ class User extends Authenticatable
             : $initials;
     }
 
-
-    public function ticketsAsCustomer()
-    {
-        return $this->hasMany(Ticket::class, 'user_id', 'sid');
-    }
-
-
-    public function ticketsAssigned()
-    {
-        return $this->hasMany(Ticket::class, 'assigned_to', 'sid');
-    }
 
     public function messages()
     {

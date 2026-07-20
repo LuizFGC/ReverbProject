@@ -34,11 +34,8 @@ class TicketService
 
     }
 
-    public function updateTicket(string $id, array $ticket)
-    {
-        $this->repository->update($ticket, $id);
-    }
 
+    //TODO : implementar Exclusao de ticket
     public function deleteTicket(string $id): void
     {
         $this->repository->delete($id);
@@ -52,6 +49,11 @@ class TicketService
     public function getTicketById(string $id)
     {
         return $this->repository->getById($id);
+    }
+
+    public function getTicketByAgente(string $id)
+    {
+        return $this->repository->getByAgent($id);
     }
 
     public function updateField(Ticket $ticket, string $field, mixed $value): void

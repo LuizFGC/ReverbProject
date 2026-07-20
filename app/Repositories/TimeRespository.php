@@ -9,7 +9,7 @@ class TimeRespository
 {
     public function getAll()
     {
-        return User::where('role', 'agent')->get();
+        return User::whereIn('role', ['agent', 'gerente'])->get();
     }
 
 
