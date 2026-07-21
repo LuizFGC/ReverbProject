@@ -36,7 +36,7 @@
         </flux:sidebar.header>
         <flux:sidebar.nav>
             <flux:sidebar.item icon="home" href="/dashboard" >Dashboard</flux:sidebar.item>
-            <flux:sidebar.item icon="ticket" badge="12" href="/tickets">Tickets</flux:sidebar.item>
+            <flux:sidebar.item icon="ticket" href="/tickets">Tickets</flux:sidebar.item>
             <flux:sidebar.item icon="user-group" href="/time">Agentes / Time</flux:sidebar.item>
         </flux:sidebar.nav>
         <flux:sidebar.spacer />
