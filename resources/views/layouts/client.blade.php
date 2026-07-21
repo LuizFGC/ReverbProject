@@ -18,18 +18,22 @@
 {{-- Sidebar --}}
 <flux:sidebar  sticky class="w-72 shrink-0 border-r bg-zinc-50 dark:bg-slate-900 border-zinc-800 flex flex-col p-6">
     <flux:sidebar.header>
-        <div class="flex items-center gap-3 pb-6 border-b border-zinc-800">
-            <div class="w-10 h-10 rounded-xl bg-indigo-600 flex items-center justify-center">
-                <flux:icon name="lifebuoy" class="w-5 h-5 text-white"/>
+        <div class="flex w-full flex-col items-center gap-3 pb-6 border-b border-zinc-800">
+            <div class="flex h-12 w-full items-center justify-center">
+                <img
+                    src="{{ asset('logoWhite.png') }}"
+                    class="h-12 w-auto"
+                    alt="Deskly"
+                >
             </div>
-            <div>
+            <div class="text-center">
                 <p class="text-white font-semibold">Portal do Cliente</p>
-                <p class="text-xs text-indigo-400">Central de Ajuda • TecSuporte</p>
+                <p class="text-xs text-indigo-400">Acompanhe seus chamados</p>
             </div>
         </div>
     </flux:sidebar.header>
 
-    <div class="flex items-center gap-3 py-5 border-b border-zinc-800">
+    <div class="flex items-center gap-3 pb-5 pt-3 border-b border-zinc-800">
         <div
             class="w-9 h-9 rounded-full bg-indigo-500/20 text-indigo-300 text-sm font-semibold flex items-center justify-center">
         </div>
