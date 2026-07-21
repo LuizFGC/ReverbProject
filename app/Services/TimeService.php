@@ -2,8 +2,6 @@
 
 namespace App\Services;
 
-use App\Repositories\PresenceRepository;
-use App\Repositories\TicketRepository;
 use App\Repositories\TimeRespository;
 
 class TimeService
@@ -15,7 +13,7 @@ class TimeService
     public function getAgentes()
     {
         $data = [];
-        $agentes =  $this->timeRepository->getAll();
+        $agentes = $this->timeRepository->getAll();
 
         foreach ($agentes as $agente) {
 
@@ -30,5 +28,4 @@ class TimeService
 
         return $data;
     }
-
 }

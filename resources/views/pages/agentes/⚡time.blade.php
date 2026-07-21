@@ -113,49 +113,49 @@ new class extends Component {
 
 
                 @php
-                //TODO : Configurar preseca do usuario
+                    //TODO : Configurar preseca do usuario
                 @endphp
-{{--                @if ($this->isCurrentUser($agent['sid']))--}}
-{{--                    <div class="border-t border-zinc-800 mt-4 pt-4">--}}
-{{--                        <p class="text-xs font-medium tracking-wide text-zinc-500 mb-2">ALTERAR SUA PRESENÇA</p>--}}
-{{--                        <div class="grid grid-cols-3 gap-2">--}}
+                {{--                @if ($this->isCurrentUser($agent['sid']))--}}
+                {{--                    <div class="border-t border-zinc-800 mt-4 pt-4">--}}
+                {{--                        <p class="text-xs font-medium tracking-wide text-zinc-500 mb-2">ALTERAR SUA PRESENÇA</p>--}}
+                {{--                        <div class="grid grid-cols-3 gap-2">--}}
 
-{{--                            <button--}}
-{{--                                wire:click="setPresence('online')"--}}
-{{--                                @class([--}}
-{{--                                    'text-sm font-medium py-1.5 rounded-lg border transition-colors',--}}
-{{--                                    'bg-emerald-500 border-emerald-500 text-white'--}}
-{{--                                        => $agent['presence'] === 'online',--}}
-{{--                                    'border-zinc-700 text-zinc-300 hover:bg-zinc-800'--}}
-{{--                                        => $agent['presence'] !== 'online',--}}
-{{--                                ])--}}
-{{--                            >--}}
-{{--                                Online--}}
-{{--                            </button>--}}
+                {{--                            <button--}}
+                {{--                                wire:click="setPresence('online')"--}}
+                {{--                                @class([--}}
+                {{--                                    'text-sm font-medium py-1.5 rounded-lg border transition-colors',--}}
+                {{--                                    'bg-emerald-500 border-emerald-500 text-white'--}}
+                {{--                                        => $agent['presence'] === 'online',--}}
+                {{--                                    'border-zinc-700 text-zinc-300 hover:bg-zinc-800'--}}
+                {{--                                        => $agent['presence'] !== 'online',--}}
+                {{--                                ])--}}
+                {{--                            >--}}
+                {{--                                Online--}}
+                {{--                            </button>--}}
 
-{{--                            <button--}}
-{{--                                wire:click="setPresence('away')"--}}
-{{--                                @class([--}}
-{{--                                    'text-sm font-medium py-1.5 rounded-lg border transition-colors',--}}
-{{--                                    'bg-amber-500 border-amber-500 text-white' => $agent['presence'] === 'away',--}}
-{{--                                    'border-zinc-700 text-zinc-300 hover:bg-zinc-800' =>$agent['presence'] !== 'away',--}}
-{{--                                ])--}}
-{{--                            >--}}
-{{--                                Ausente--}}
-{{--                            </button>--}}
-{{--                            <button--}}
-{{--                                wire:click="setPresence('offline')"--}}
-{{--                                @class([--}}
-{{--                                    'text-sm font-medium py-1.5 rounded-lg border transition-colors',--}}
-{{--                                    'bg-zinc-600 border-zinc-600 text-white' => $agent['presence'] === 'offline',--}}
-{{--                                    'border-zinc-700 text-zinc-300 hover:bg-zinc-800' => $agent['presence'] !== 'offline',--}}
-{{--                                ])--}}
-{{--                            >--}}
-{{--                                Offline--}}
-{{--                            </button>--}}
-{{--                        </div>--}}
-{{--                    </div>--}}
-{{--                @endif--}}
+                {{--                            <button--}}
+                {{--                                wire:click="setPresence('away')"--}}
+                {{--                                @class([--}}
+                {{--                                    'text-sm font-medium py-1.5 rounded-lg border transition-colors',--}}
+                {{--                                    'bg-amber-500 border-amber-500 text-white' => $agent['presence'] === 'away',--}}
+                {{--                                    'border-zinc-700 text-zinc-300 hover:bg-zinc-800' =>$agent['presence'] !== 'away',--}}
+                {{--                                ])--}}
+                {{--                            >--}}
+                {{--                                Ausente--}}
+                {{--                            </button>--}}
+                {{--                            <button--}}
+                {{--                                wire:click="setPresence('offline')"--}}
+                {{--                                @class([--}}
+                {{--                                    'text-sm font-medium py-1.5 rounded-lg border transition-colors',--}}
+                {{--                                    'bg-zinc-600 border-zinc-600 text-white' => $agent['presence'] === 'offline',--}}
+                {{--                                    'border-zinc-700 text-zinc-300 hover:bg-zinc-800' => $agent['presence'] !== 'offline',--}}
+                {{--                                ])--}}
+                {{--                            >--}}
+                {{--                                Offline--}}
+                {{--                            </button>--}}
+                {{--                        </div>--}}
+                {{--                    </div>--}}
+                {{--                @endif--}}
             </div>
         @endforeach
     </div>

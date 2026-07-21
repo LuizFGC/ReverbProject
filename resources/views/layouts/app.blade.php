@@ -19,17 +19,10 @@
     <flux:sidebar sticky collapsible class="bg-zinc-50 dark:bg-slate-900 border-r border-zinc-200 dark:border-zinc-700">
         <flux:sidebar.header>
 
-            {{-- Logo tema claro --}}
-            <img
-                src="{{ asset('logo.png') }}"
-                class="h-10 w-auto dark:hidden"
-                alt="Deskly"
-            >
-
             {{-- Logo tema escuro --}}
             <img
                 src="{{ asset('logoWhite.png') }}"
-                class="hidden h-10 w-auto dark:block"
+                class=" h-10 w-auto  in-data-flux-sidebar-collapsed-desktop:hidden"
                 alt="Deskly"
             >
             <flux:sidebar.collapse class="in-data-flux-sidebar-on-desktop:not-in-data-flux-sidebar-collapsed-desktop:-mr-2" />
@@ -38,11 +31,13 @@
             <flux:sidebar.item icon="home" href="/dashboard" >Dashboard</flux:sidebar.item>
             <flux:sidebar.item icon="ticket" href="/tickets">Tickets</flux:sidebar.item>
             <flux:sidebar.item icon="user-group" href="/time">Agentes / Time</flux:sidebar.item>
+            @if(auth()->user()->role === 'gerente')
+                <flux:sidebar.item icon="user-circle" href="/admin">Painel Admin</flux:sidebar.item>
+            @endif
         </flux:sidebar.nav>
         <flux:sidebar.spacer />
         <flux:sidebar.nav>
-            <flux:sidebar.item icon="cog-6-tooth" href="/settings">Settings</flux:sidebar.item>
-            <flux:sidebar.item icon="information-circle" href="#">Help</flux:sidebar.item>
+            <flux:sidebar.item icon="cog-6-tooth" href="/settings">Configuracoes</flux:sidebar.item>
         </flux:sidebar.nav>
         <flux:dropdown position="top" align="start" class="max-lg:hidden">
             <flux:sidebar.profile name="{{auth()->user()->name}}" />

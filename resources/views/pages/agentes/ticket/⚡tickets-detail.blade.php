@@ -21,7 +21,7 @@ new class extends Component {
 
     public string $prioridade;
 
-    public ?string $assigned_to = null;
+    public ?string $assigned_to = '';
 
     public User $customer;
 
@@ -39,7 +39,7 @@ new class extends Component {
         $this->ticket = $data['ticket'];
         $this->status = $this->ticket->status;
         $this->prioridade = $this->ticket->prioridade;
-        $this->assigned_to = $this->ticket->assigned_to;
+        $this->assigned_to = $this->ticket->assigned_to ?? '';
         $this->messages = $data['messages'];
         $this->customer = $data['customer'];
 
@@ -165,15 +165,16 @@ new class extends Component {
             <div>
                 <label class="block text-xs font-medium tracking-wide text-zinc-500 uppercase mb-1.5">Agente
                     Responsável</label>
-                <flux:select wire:model.live="assigned_to" size="sm"
-                             class="[&>select]:bg-zinc-800/60 [&>select]:border-zinc-700 [&>select]:text-zinc-200 [&>select]:rounded-lg">
-                    @foreach ($this->agentes as $agent)
+                <flux:select wire:model.live="assigned_to">
+                    <flux:select.option value="">
+                        Selecione
+                    </flux:select.option>
 
-                        <flux:select.option value="{{$agent['sid']}}">{{$agent['name']}}
-                            - {{$agent['cargo']}}
+                    @foreach ($this->agentes as $agent)
+                        <flux:select.option value="{{ $agent['sid'] }}">
+                            {{ $agent['name'] }} - {{ $agent['cargo'] }}
                         </flux:select.option>
                     @endforeach
-
                 </flux:select>
             </div>
         </div>

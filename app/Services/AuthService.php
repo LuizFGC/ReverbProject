@@ -25,6 +25,7 @@ class AuthService
 
         request()->session()->regenerate();
 
+        //Presenca ainda nao esta funcionnando
         $this->presenceService->update(
             $user->sid,
             'online'
