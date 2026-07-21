@@ -47,10 +47,6 @@ class extends Component {
 
     public function sendReply(MessageService $service): void
     {
-//        $this->validate([
-//            'reply' => 'required|string|max:5000'
-//        ]);
-
 
         $message = $service->createMessage(
             ticketId: $this->ticketId,
@@ -84,10 +80,10 @@ class extends Component {
 <flux:card class="bg-zinc-50 dark:bg-slate-900">
     <div class="flex h-[calc(88vh)]">
 
-        {{-- Left: conversation --}}
+
         <div class="flex-1 flex flex-col ">
 
-            {{-- Header --}}
+
             <div
                 class="flex items-center justify-between px-6 py-4 border-b border-zinc-800 bg-zinc-50 dark:bg-slate-900">
                 <div class="flex items-center gap-4">

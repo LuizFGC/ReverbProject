@@ -16,12 +16,12 @@ class DashboardService
 
     public function getDashboardData($filtros)
     {
-
         return [
-            'totalAberto' => $this->getByStatus('Aberto', $filtros),
-            'fechado' => $this->getByStatus('Aberto', $filtros),
-            'urgentes' => $this->getByPrioridade('urgente', $filtros),
-            'emAtendimento' => $this->getByStatus('Aberto', $filtros),
+            'totalAberto' => $this->repository->getByStatus('Aberto', $filtros),
+            'fechado' => $this->repository->getByStatus('Resolvido', $filtros),
+            'urgentes' => $this->repository->getUrgentes('Urgente', $filtros),
+            'emAtendimento' => $this->repository->getByStatus('Em andamento', $filtros),
+            'volumeSemanal' => $this->repository->getVolumeSemanal($filtros),
         ];
     }
 }

@@ -46,7 +46,7 @@ new class extends Component {
 
     public function openTicket(string $id): void
     {
-        $this->redirect("tickets/$id")    ;
+        $this->redirect("tickets/$id");
     }
 
 };
@@ -107,56 +107,55 @@ new class extends Component {
     </div>
 
     {{--  lista --}}
-         <flux:table :paginate="$this->tickets">
+    <flux:table :paginate="$this->tickets">
             <flux:table.columns>
-                <flux:table.columns>
-                    <flux:table.column>Usuario</flux:table.column>
-                    <flux:table.column>Chamado</flux:table.column>
-                    <flux:table.column>Status</flux:table.column>
-                    <flux:table.column>Prioridade</flux:table.column>
-                </flux:table.columns>
-                <flux:table.rows>
-                    @forelse($this->tickets as $ticket)
-                        <flux:table.row :key="$ticket->id">
-                            <flux:table.cell>
-                                {{ $ticket->user_name }}
-                            </flux:table.cell>
+                <flux:table.column>Usuario</flux:table.column>
+                <flux:table.column>Chamado</flux:table.column>
+                <flux:table.column>Status</flux:table.column>
+                <flux:table.column>Prioridade</flux:table.column>
+            </flux:table.columns>
+            <flux:table.rows>
+                @forelse($this->tickets as $ticket)
+                    <flux:table.row :key="$ticket->id">
+                        <flux:table.cell>
+                            {{ $ticket->user_name }}
+                        </flux:table.cell>
 
-                            <flux:table.cell>
-                                {{ $ticket->titulo }}
-                            </flux:table.cell>
+                        <flux:table.cell>
+                            {{ $ticket->titulo }}
+                        </flux:table.cell>
 
-                            <flux:table.cell class="py-0">
-                                <flux:badge size="sm">
-                                    {{ $ticket->status }}
-                                </flux:badge>
-                            </flux:table.cell>
+                        <flux:table.cell class="py-0">
+                            <flux:badge size="sm">
+                                {{ $ticket->status }}
+                            </flux:badge>
+                        </flux:table.cell>
 
-                            <flux:table.cell>
-                                <flux:badge size="sm">
-                                    {{ $ticket->prioridade }}
-                                </flux:badge>
-                            </flux:table.cell>
+                        <flux:table.cell>
+                            <flux:badge size="sm">
+                                {{ $ticket->prioridade }}
+                            </flux:badge>
+                        </flux:table.cell>
 
-                            <flux:table.cell class="py-0">
-                                <flux:button
-                                    class="cursor-pointer"
-                                    variant="ghost"
-                                    size="sm"
-                                    icon="eye"
-                                    wire:click="openTicket('{{ $ticket->id }}')"
-                                />
-                            </flux:table.cell>
-                        </flux:table.row>
-                    @empty
-                        <flux:table.row>
-                            <flux:table.cell colspan="5">
-                                <div class="text-center py-4 text-zinc-500">
-                                    Nenhum ticket encontrado.
-                                </div>
-                            </flux:table.cell>
-                        </flux:table.row>
-                    @endforelse
-                </flux:table.rows>
-         </flux:table>
+                        <flux:table.cell class="py-0">
+                            <flux:button
+                                class="cursor-pointer"
+                                variant="ghost"
+                                size="sm"
+                                icon="eye"
+                                wire:click="openTicket('{{ $ticket->id }}')"
+                            />
+                        </flux:table.cell>
+                    </flux:table.row>
+                @empty
+                    <flux:table.row>
+                        <flux:table.cell colspan="5">
+                            <div class="text-center py-4 text-zinc-500">
+                                Nenhum ticket encontrado.
+                            </div>
+                        </flux:table.cell>
+                    </flux:table.row>
+                @endforelse
+            </flux:table.rows>
+        </flux:table>
 </div>
