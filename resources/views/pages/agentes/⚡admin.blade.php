@@ -96,7 +96,7 @@ new class extends Component {
         <flux:button
             variant="primary"
             icon="user-plus"
-            x-on:click="$dispatch('abrir-formulario', { tipo: @js($activeTab === 'clientes' ? 'cliente' : 'agente') })"
+            x-on:click="$dispatch('abrir-formulario', { tipo: @js($activeTab === 'clientes' ? 'customer' : 'agent') })"
         >
             Cadastrar Novo Usuário
         </flux:button>

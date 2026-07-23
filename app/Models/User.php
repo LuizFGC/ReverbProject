@@ -23,7 +23,7 @@ use MongoDB\Laravel\Eloquent\HybridRelations;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  */
-#[Fillable(['name', 'email', 'password', 'sid'])]
+#[Fillable(['name', 'email', 'password', 'sid', 'role','cargo_id', 'departamento_id'])]
 #[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
@@ -59,5 +59,15 @@ class User extends Authenticatable
     public function messages()
     {
         return $this->hasMany(Message::class, 'user_id');
+    }
+
+    public function cargo()
+    {
+        return $this->belongsTo(Cargo::class);
+    }
+
+    public function departamento()
+    {
+        return $this->belongsTo(Departamento::class);
     }
 }

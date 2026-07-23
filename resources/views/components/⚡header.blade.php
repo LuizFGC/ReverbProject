@@ -58,7 +58,7 @@ new class extends Component {
                 </div>
                 <div class="text-left">
                     <div class="text-sm font-medium text-white">{{auth()->user()->name}}</div>
-                    <div class="text-xs text-zinc-400">{{auth()->user()->cargo}}</div>
+                    <div class="text-xs text-zinc-400">{{auth()->user()->cargo->nome}}</div>
                 </div>
                 <flux:icon name="chevron-down" class="w-4 h-4 text-zinc-400"/>
             </button>

@@ -21,6 +21,7 @@ class TimeService
                 'sid' => $agente->sid,
                 'name' => $agente->name,
                 'cargo' => $agente->cargo,
+                'departamento' => $agente->departamento,
                 'email' => $agente->email,
 
             ];

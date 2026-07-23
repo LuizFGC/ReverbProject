@@ -25,10 +25,5 @@ class CreateTicketRequest extends FormRequest
     }
 
 
-    public function messages(): array
-    {
-        return [
-            'required' => 'Campo Obrigatorio',
-        ];
-    }
+
 }

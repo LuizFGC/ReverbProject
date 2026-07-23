@@ -60,7 +60,6 @@ new class extends Component {
     {{-- Agentes --}}
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         @foreach ($this->agentes as $agent)
-
             <div @class([
     'bg-zinc-50 dark:bg-slate-900 border rounded-xl p-5',
     'border-indigo-500 ring-1 ring-indigo-500' => $this->isCurrentUser($agent['sid']),
@@ -72,7 +71,7 @@ new class extends Component {
                         <div class="relative">
                             <div
                                 class="w-10 h-10 rounded-full bg-zinc-50 dark:bg-slate-900  text-indigo-300 font-semibold flex items-center justify-center text-sm">
-                                {{ Str::of($agent['name'])->explode(' ')->map(fn ($n) => strtoupper($n[0]))->take(2)->join('') }}
+                                {{ Str::of($agent['name'])->explode(' ')->filter()->map(fn ($n) => strtoupper(substr($n, 0, 1)))->take(2)->join('') }}
                             </div>
                         </div>
                         <div>
@@ -82,7 +81,7 @@ new class extends Component {
                                     <span class="text-xs text-indigo-400">Você</span>
                                 @endif
                             </div>
-                            <p class="text-sm text-zinc-500">{{ $agent['cargo']}}</p>
+                            <p class="text-sm text-zinc-500">{{$agent['cargo']['nome']}}</p>
                         </div>
                     </div>
 
@@ -91,7 +90,7 @@ new class extends Component {
                 <div class="border-t border-zinc-800 mt-4 pt-4 space-y-2">
                     <p class="text-sm text-zinc-400 flex items-center gap-2">
                         <flux:icon name="building-office-2" class="w-4 h-4 text-zinc-500"/>
-                        Departamento: <span class="text-white font-medium">{{ $agent['cargo'] }}</span>
+                        Departamento: <span class="text-white font-medium">{{$agent['departamento']['nome']}}</span>
                     </p>
                     <p class="text-sm text-zinc-400 flex items-center gap-2">
                         <flux:icon name="envelope" class="w-4 h-4 text-zinc-500"/>

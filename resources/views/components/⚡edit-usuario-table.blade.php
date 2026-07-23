@@ -56,10 +56,6 @@ new class extends Component {
         })->values();
     }
 
-    public function editar(string $id): void
-    {
-        $this->dispatch('editar-usuario', id: $id);
-    }
 
     public function excluir(string $id): void
     {
@@ -132,19 +128,19 @@ new class extends Component {
 
                         <flux:table.cell>
                             <flux:badge size="sm" >
-                                {{$agente['cargo']}}
+                                {{$agente['cargo']['nome']}}
                             </flux:badge>
                         </flux:table.cell>
 
-                        <flux:table.cell>{{ $agente['departamento'] }}</flux:table.cell>
+                        <flux:table.cell>
+                            <flux:badge size="sm" >
+                                {{$agente['departamento']['nome']}}
+                            </flux:badge>
+                        </flux:table.cell>
 
 
                         <flux:table.cell>
                             <div class="flex items-center gap-3">
-                                <button wire:click="editar('{{ $agente['id'] }}')"
-                                        class="text-zinc-400 hover:text-white">
-                                    <flux:icon name="pencil" class="w-4 h-4"/>
-                                </button>
                                 <button
                                     wire:click="excluir('{{ $agente['id'] }}')"
                                     wire:confirm="Tem certeza que deseja remover este agente?"
@@ -188,14 +184,10 @@ new class extends Component {
                             </div>
                         </flux:table.cell>
 
-                        <flux:table.cell>{{ $cliente['departamento'] }}</flux:table.cell>
+                        <flux:table.cell>{{ $cliente['departamento']['nome'] }}</flux:table.cell>
 
                         <flux:table.cell>
                             <div class="flex items-center gap-3">
-                                <button wire:click="editar('{{ $cliente['id'] }}')"
-                                        class="text-zinc-400 hover:text-white">
-                                    <flux:icon name="pencil" class="w-4 h-4"/>
-                                </button>
                                 <button
                                     wire:click="excluir('{{ $cliente['id'] }}')"
                                     wire:confirm="Tem certeza que deseja remover este cliente?"

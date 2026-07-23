@@ -14,7 +14,8 @@ class UserRepository
 
     public function getUserByRole(array $roles): Collection
     {
-        return User::whereIn('role', $roles)
+        return User::With(['cargo', 'departamento'])
+            ->whereIn('role', $roles)
             ->get()
             ->map(fn ($user) => [
                 'id' => $user->sid,
@@ -36,5 +37,11 @@ class UserRepository
             'agentes' => $agentes,
             'clientes' => $clientes,
         ];
+    }
+
+    public function create(array $user)
+    {
+
+        return User::create($user);
     }
 }

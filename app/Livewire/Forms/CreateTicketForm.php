@@ -21,6 +21,15 @@ class CreateTicketForm extends Form
     {
         return (new CreateTicketRequest)->rules();
     }
+    public function messages(): array
+    {
+        return [
+            '*.required' => 'Campo obrigatório.',
+            '*.string' => 'O campo deve ser um texto.',
+            '*.array' => 'O campo deve ser uma lista.',
+            'prioridade.in' => 'Prioridade inválida.',
+        ];
+    }
 
     public function resetForm(): void
     {

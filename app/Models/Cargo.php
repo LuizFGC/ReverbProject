@@ -26,8 +26,8 @@ class Cargo extends Model
         return $this->belongsTo(Departamento::class, 'id_departamento');
     }
 
-    public function funcionarios(): HasMany
+    public function user(): HasMany
     {
-        return $this->hasMany(Funcionario::class, 'cargo_id');
+        return $this->hasMany(User::class, 'cargo_id');
     }
 }

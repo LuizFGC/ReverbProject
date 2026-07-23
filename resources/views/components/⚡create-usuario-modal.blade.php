@@ -1,44 +1,33 @@
 <?php
 
 use App\Livewire\Forms\CreateUserForm;
+use App\Services\CargoService;
+use App\Services\DepartamentoService;
+use App\Services\UserService;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 new class extends Component {
 
     public bool $show = false;
-    public string $formTab = 'agente';
+    public string $formTab = 'agent';
 
-    public ?string $editingId = null;
 
     public CreateUserForm $form;
 
-    public function mount(): void
-    {
-        $this->form = new CreateUserForm($this, 'form');
+    public function mount(
+        CargoService $cargoService,
+    ): void {
+        $this->form->cargos = $cargoService->getAllCargos();
+        $this->form->cargo = $this->form->cargos[0]['id'] ?? null;
     }
+
 
     #[On('abrir-formulario')]
     public function abrir(?string $tipo = null): void
     {
         $this->form->resetFormulario();
-        $this->formTab = $tipo ?? 'agente';
-        $this->show = true;
-    }
-
-    #[On('editar-usuario')]
-    public function carregarParaEdicao(string $id): void
-    {
-        // TODO: trocar por busca real, ex: User::findOrFail($id)
-
-        $registro =
-
-        $this->editingId = $registro['id'];
-        $this->nome = $registro['nome'];
-        $this->email = $registro['email'];
-        $this->cargo = $registro['cargo'];
-        $this->departamento = $registro['departamento'];
-        $this->formTab = 'agente';
+        $this->formTab = $tipo ?? 'agent';
         $this->show = true;
     }
 
@@ -50,37 +39,21 @@ new class extends Component {
     public function fechar(): void
     {
         $this->show = false;
-        $this->resetFormulario();
+        $this->form->resetFormulario();
     }
 
-    public function salvar(): void
+    public function salvar(UserService $service): void
     {
-        $regras = [
-            'nome' => ['required', 'string', 'min:3', 'max:120'],
-            'email' => ['required', 'email', 'max:150'],
-        ];
+        $data = $this->form->validate();
+        $data['tipo'] = $this->formTab;
 
-        if ($this->formTab === 'agente') {
-            $regras['cargo'] = ['required', 'string'];
-            $regras['departamento'] = ['required', 'string'];
-        }
+        $service->createUser($data);
 
-        $this->validate($regras);
+        $this->form->resetFormulario();
+        $this->show = false;
 
-        // TODO: trocar pela persistência real, ex:
-        // if ($this->editingId) {
-        //     User::findOrFail($this->editingId)->update([...]);
-        // } else {
-        //     User::create([...]);
-        // }
-
-        $this->dispatch('usuario-salvo', mensagem: $this->editingId
-            ? 'Usuário atualizado com sucesso.'
-            : 'Usuário cadastrado com sucesso.');
-
-        $this->fechar();
+        $this->dispatch('usuario-salvo', mensagem: 'Usuário criado com sucesso!');
     }
-
 
 };
 ?>
@@ -101,17 +74,17 @@ new class extends Component {
                 <div class="inline-flex bg-zinc-950 border border-zinc-800 rounded-lg p-1 gap-1">
                     <button
                         type="button"
-                        wire:click="selecionarTipo('agente')"
+                        wire:click="selecionarTipo('agent')"
                         class="px-3 py-1.5 rounded-md text-xs font-semibold transition
-                            {{ $formTab === 'agente' ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:text-white' }}"
+                            {{ $formTab === 'agent' ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:text-white' }}"
                     >
                         Novo Agente
                     </button>
                     <button
                         type="button"
-                        wire:click="selecionarTipo('cliente')"
+                        wire:click="selecionarTipo('customer')"
                         class="px-3 py-1.5 rounded-md text-xs font-semibold transition
-                            {{ $formTab === 'cliente' ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:text-white' }}"
+                            {{ $formTab === 'customer' ? 'bg-indigo-600 text-white' : 'text-zinc-400 hover:text-white' }}"
                     >
                         Novo Cliente
                     </button>
@@ -119,15 +92,15 @@ new class extends Component {
             </div>
 
             <div class="border-t border-zinc-800 pt-6">
-                <form wire:submit="salvar" class="space-y-6">
+                <div class="space-y-6">
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <flux:input
-                            wire:model="nome"
+                            wire:model="form.nome"
                             label="Nome Completo"
                             placeholder="Ex: Pedro Henrique"
                         />
                         <flux:input
-                            wire:model="email"
+                            wire:model="form.email"
                             type="email"
                             label="Endereço de E-mail"
                             icon="envelope"
@@ -135,31 +108,24 @@ new class extends Component {
                         />
                     </div>
 
-                    @if ($formTab === 'agente')
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                            <flux:select wire:model="cargo" label="Atribuição / Cargo (Role)">
+                            <flux:select wire:model="form.cargo" label="Atribuição / Cargo (Role)">
                                 @foreach ($this->form->cargos as $valor)
-                                    <flux:select.option value="{{ $valor }}">{{ $valor }}</flux:select.option>
+                                    <flux:select.option value="{{ $valor['id'] }}">{{ $valor['nome'] }}</flux:select.option>
                                 @endforeach
                             </flux:select>
 
-                            <flux:select wire:model="departamento" label="Departamento Técnico">
-                                @foreach ($this->form->departamentos as $dep)
-                                    <flux:select.option value="{{ $dep }}">{{ $dep }}</flux:select.option>
-                                @endforeach
-                            </flux:select>
                         </div>
-                    @endif
 
                     <div class="flex justify-end gap-3 border-t border-zinc-800 pt-6">
                         <flux:button type="button" variant="ghost" wire:click="fechar">
                             Cancelar
                         </flux:button>
-                        <flux:button type="submit" variant="primary">
+                        <flux:button type="button" variant="primary" wire:click="salvar">
                             Registrar Conta no Sistema
                         </flux:button>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     @endif
