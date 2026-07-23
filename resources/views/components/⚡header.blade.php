@@ -38,7 +38,6 @@ new class extends Component {
     <div class="flex w-full items-center gap-4 px-6 py-3 justify-end  ">
 
         <flux:button variant="ghost" size="sm" icon="sun" wire:click="toggleTheme"/>
-        <flux:button variant="ghost" size="sm" icon="question-mark-circle"/>
 
         <div class="relative">
             <flux:button variant="ghost" size="sm" icon="bell"/>

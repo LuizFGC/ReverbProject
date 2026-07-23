@@ -83,7 +83,8 @@ new class extends Component {
         $data = $this->form->validate();
 
 
-        $service->createTicket($data);
+         $service->createTicket($data);
+
 
         $this->form->resetForm();
 

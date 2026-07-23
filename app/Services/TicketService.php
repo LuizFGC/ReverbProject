@@ -3,8 +3,11 @@
 namespace App\Services;
 
 use App\Models\Ticket;
+use App\Models\User;
+use App\Notifications\TicketCriadoNotification;
 use App\Repositories\TicketRepository;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Notification;
 
 class TicketService
 {
@@ -17,7 +20,7 @@ class TicketService
 
     public function createTicket($data)
     {
-        $ticket = [
+        $data = [
 
             'titulo' => $data['titulo'],
             'prioridade' => $data['prioridade'],
@@ -30,12 +33,14 @@ class TicketService
 
         ];
 
-        return $this->repository->create($ticket);
+        $ticket = $this->repository->create($data);
 
+        $this->sendNotification($ticket['user_name'], $ticket['id']);
+
+        return $ticket;
     }
 
-
-    //TODO : implementar Exclusao de ticket
+    // TODO : implementar Exclusao de ticket
     public function deleteTicket(string $id): void
     {
         $this->repository->delete($id);
@@ -59,5 +64,15 @@ class TicketService
     public function updateField(Ticket $ticket, string $field, mixed $value): void
     {
         $this->repository->updateField($ticket, $field, $value);
+    }
+
+    private function sendNotification(string $userName, $ticketId)
+    {
+        $agents = User::role('agent')->get();
+
+        Notification::send(
+            $agents,
+            new TicketCriadoNotification($userName, $ticketId)
+        );
     }
 }

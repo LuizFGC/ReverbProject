@@ -32,6 +32,7 @@ class User extends Authenticatable
 
     protected $connection = 'pgsql';
 
+
     /**
      * Get the attributes that should be cast.
      *

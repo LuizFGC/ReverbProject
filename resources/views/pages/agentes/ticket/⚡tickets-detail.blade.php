@@ -172,7 +172,7 @@ new class extends Component {
 
                     @foreach ($this->agentes as $agent)
                         <flux:select.option value="{{ $agent['sid'] }}">
-                            {{ $agent['name'] }} - {{ $agent['cargo'] }}
+                            {{ $agent['name'] }} - {{ $agent['cargo']['nome'] }}
                         </flux:select.option>
                     @endforeach
                 </flux:select>
@@ -197,7 +197,7 @@ new class extends Component {
                 </div>
                 <div>
                     <p class="text-white font-medium">{{ $customer['name'] }}</p>
-                    <p class="text-xs text-indigo-400 font-medium">{{ strtoupper($customer['company'] ?? '') }}</p>
+                    <p class="text-xs text-indigo-400 font-medium">{{ strtoupper($customer['departamento']['nome'] ?? '') }}</p>
                 </div>
             </div>
 
@@ -207,12 +207,12 @@ new class extends Component {
                     <span>{{ $customer['email'] ?? '—' }}</span>
                 </p>
                 <p class="flex items-center gap-2">
-                    <flux:icon name="phone" class="w-4 h-4 text-zinc-500 shrink-0"/>
-                    <span>{{ $customer['phone'] ?? '—' }}</span>
+                    <flux:icon name="user" class="w-4 h-4 text-zinc-500 shrink-0"/>
+                    <span>{{ $customer['cargo']['nome'] ?? '—' }}</span>
                 </p>
                 <p class="flex items-center gap-2">
                     <flux:icon name="building-office-2" class="w-4 h-4 text-zinc-500 shrink-0"/>
-                    <span>{{ $customer['company'] ?? '—' }}</span>
+                    <span>{{ $customer['departamento']['nome'] ?? '—' }}</span>
                 </p>
             </div>
         </div>

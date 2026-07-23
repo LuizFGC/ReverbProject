@@ -184,7 +184,11 @@ new class extends Component {
                             </div>
                         </flux:table.cell>
 
-                        <flux:table.cell>{{ $cliente['departamento']['nome'] }}</flux:table.cell>
+                        <flux:table.cell>
+                            <flux:badge size="sm" >
+                                {{ $cliente['departamento']['nome'] }}
+                            </flux:badge>
+                            </flux:table.cell>
 
                         <flux:table.cell>
                             <div class="flex items-center gap-3">
