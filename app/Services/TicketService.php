@@ -68,7 +68,7 @@ class TicketService
 
     private function sendNotification(string $userName, $ticketId)
     {
-        $agents = User::role('agent')->get();
+        $agents = User::WhereIn('role', ['agent', 'gerente'])->get();
 
         Notification::send(
             $agents,

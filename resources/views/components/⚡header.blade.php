@@ -1,15 +1,19 @@
 <?php
 
 use App\Services\AuthService;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 
 new class extends Component {
-    public bool $hasNotification = true;
+
+    public array $notification = [];
+    public bool $hasNotification = false;
 
     public function toggleTheme(): void
     {
         //
     }
+
     public function logout(AuthService $authService): void
     {
         $authService->logout();
@@ -19,10 +23,11 @@ new class extends Component {
     {
         return config('breadcrumbs')[request()->route()->getName()] ?? [];
     }
+
+
 };
 ?>
 <div class="flex w-full bg-zinc-50 dark:bg-slate-900 ">
-
     <div class="flex items-center ">
         <flux:breadcrumbs>
             <flux:breadcrumbs.item href="/dashboard" icon="home"/>
@@ -39,12 +44,7 @@ new class extends Component {
 
         <flux:button variant="ghost" size="sm" icon="sun" wire:click="toggleTheme"/>
 
-        <div class="relative">
-            <flux:button variant="ghost" size="sm" icon="bell"/>
-            @if ($hasNotification)
-                <span class="absolute top-1 right-1 w-2 h-2 bg-red-500 rounded-full"></span>
-            @endif
-        </div>
+        <livewire:notification-bell />
 
         <flux:separator vertical class="h-8"/>
 
