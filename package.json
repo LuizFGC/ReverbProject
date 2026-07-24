@@ -19,6 +19,7 @@
         "lightningcss-linux-x64-gnu": "^1.29.1"
     },
     "devDependencies": {
+        "@tailwindcss/postcss": "^4.3.3",
         "laravel-echo": "^2.4.0",
         "pusher-js": "^8.5.0"
     }
