@@ -35,7 +35,7 @@ class TicketService
 
         $ticket = $this->repository->create($data);
 
-        $this->sendNotification($ticket['user_name'], $ticket['id']);
+        $this->sendNotification($ticket['user_name'], $ticket['id'], $ticket['titulo']);
 
         return $ticket;
     }
@@ -66,13 +66,13 @@ class TicketService
         $this->repository->updateField($ticket, $field, $value);
     }
 
-    private function sendNotification(string $userName, $ticketId)
+    private function sendNotification(string $userName, $ticketId, $ticketTitle)
     {
         $agents = User::WhereIn('role', ['agent', 'gerente'])->get();
 
         Notification::send(
             $agents,
-            new TicketCriadoNotification($userName, $ticketId)
+            new TicketCriadoNotification($userName, $ticketId, $ticketTitle)
         );
     }
 }

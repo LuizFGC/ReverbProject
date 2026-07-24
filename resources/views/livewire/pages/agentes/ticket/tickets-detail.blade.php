@@ -163,7 +163,7 @@
                         <div class="relative shrink-0">
                             <div
                                 class="w-8 h-8 rounded-full bg-zinc-700 text-zinc-200 text-xs font-semibold flex items-center justify-center">
-                                {{auth()->user()->initials()}}
+                                {{$message->user->initials()}}
                             </div>
                             <span
                                 class="absolute bottom-0 right-0 w-2 h-2 rounded-full bg-emerald-400 border-2 border-zinc-950"></span>

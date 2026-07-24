@@ -110,18 +110,18 @@
                 <flux:table.column>Assunto / Título</flux:table.column>
                 <flux:table.column>Status</flux:table.column>
                 <flux:table.column>Prioridade</flux:table.column>
-                <flux:table.column>Atribuído a</flux:table.column>
+                <flux:table.column>Criado por</flux:table.column>
                 <flux:table.column>Atualizado</flux:table.column>
             </flux:table.columns>
 
             <flux:table.rows>
-                @forelse ($recentActivity as $row)
+                @forelse ($this->recentActivity as $row)
                     <flux:table.row>
                         <flux:table.cell>{{ $row['id'] }}</flux:table.cell>
-                        <flux:table.cell>{{ $row['title'] }}</flux:table.cell>
+                        <flux:table.cell>{{ $row['titulo'] }}</flux:table.cell>
                         <flux:table.cell>{{ $row['status'] }}</flux:table.cell>
-                        <flux:table.cell>{{ $row['priority'] }}</flux:table.cell>
-                        <flux:table.cell>{{ $row['assignee'] }}</flux:table.cell>
+                        <flux:table.cell>{{ $row['prioridade'] }}</flux:table.cell>
+                        <flux:table.cell>{{ $row['user_name'] }}</flux:table.cell>
                         <flux:table.cell>{{ $row['updated_at'] }}</flux:table.cell>
                     </flux:table.row>
                 @empty

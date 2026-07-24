@@ -68,7 +68,7 @@
                         <div class="flex items-end gap-3">
                             <div
                                 class="w-8 h-8 rounded-full bg-zinc-700 text-zinc-200 text-xs font-semibold flex items-center justify-center shrink-0">
-                                {{auth()->user()->initials()}}
+                                {{$message->user->initials()}}
                             </div>
                             <div class="max-w-lg">
                                 <p class="text-sm text-zinc-400 mb-1">

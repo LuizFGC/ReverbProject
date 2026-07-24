@@ -22,6 +22,7 @@ class DashboardService
             'urgentes' => $this->repository->getUrgentes('Urgente', $filtros),
             'emAtendimento' => $this->repository->getByStatus('Em andamento', $filtros),
             'volumeSemanal' => $this->repository->getVolumeSemanal($filtros),
+            'recentes' => $this->repository->getRecentes($filtros),
         ];
     }
 }

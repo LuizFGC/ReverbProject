@@ -3,6 +3,7 @@
 namespace App\Livewire\Pages\Agentes;
 
 use App\Services\DashboardService;
+use Illuminate\Support\Collection;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 
@@ -59,9 +60,11 @@ class Dashboard extends Component
         $this->redirect("tickets/$id");
     }
 
-    public array $recentActivity = [
-
-    ];
+    #[Computed]
+    public function recentActivity(): Collection
+    {
+        return $this->dashboardData['recentes'];
+    }
 
     public function render()
     {

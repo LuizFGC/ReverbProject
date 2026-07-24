@@ -99,4 +99,15 @@ class DashboardRepository
             7 => 'Dom',
         };
     }
+
+    public function getRecentes($filtros): Collection
+    {
+        return Ticket::when(
+            ! empty($filtros['agente']),
+            fn ($query) => $query->where('assigned_to', $filtros['agente'])
+        )
+            ->latest()
+            ->limit(5)
+            ->get();
+    }
 }

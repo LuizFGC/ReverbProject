@@ -14,7 +14,7 @@ class TicketCriadoNotification extends Notification
     /**
      * Create a new notification instance.
      */
-    public function __construct(public string $userName, public string $ticketId)
+    public function __construct(public string $userName, public string $ticketId, public string $ticketTitle)
     {
         //
     }
@@ -49,8 +49,9 @@ class TicketCriadoNotification extends Notification
     {
         return [
             'user_name' => $this->userName,
+            'title' => $this->ticketTitle,
             'ticket_id' => $this->ticketId,
-            'message' => "Ticket #{$this->ticketId} criado por {$this->userName}",
+            'message' => "Novo Ticket {$this->ticketTitle} criado por {$this->userName}",
         ];
     }
 

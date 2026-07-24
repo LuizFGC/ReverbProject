@@ -88,7 +88,7 @@ new class extends Component {
                     wire:key="notification-{{ $notification->id }}"
                     class="{{ is_null($notification->read_at) ? 'font-semibold' : 'opacity-60' }}"
                 >
-                    <div class="flex flex-col gap-0.5">
+                    <div class="flex flex-col gap-0.5 border-b py-2 ">
                         <a href="/tickets/{{$notification->data['ticket_id']}}">
                         <span class="text-sm">{{ $notification->data['message'] ?? '' }}</span>
                         <span class="text-xs text-zinc-400">
